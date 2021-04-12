@@ -70,19 +70,20 @@ def apply_watermark():
 # api key P23OWF071I39S6QUR2EL9MDT74B165JX48CKYZ8N0A5VHG
 
     image_url = get_s3_url(bucket_name=bucket_name, filename=filename)
+    qr_url = get_s3_url(bucket_name = bucket_name, filename = qr_name)
 
     # GENERATE REQUEST FOR QRACKAJACK
-    qr_req_url = f'https://qrackajack.expeditedaddons.com/?api_key= &bg_color=%23ffffff&content={image_url}&fg_color=%23000000&height=256&width=256'
+    qr_req_url = f'https://qrackajack.expeditedaddons.com/?api_key=71T2JH3V6SAU450B710COPYI58WM39298FNDQ4G6RXKLEZ&bg_color=%23ffffff&content={qr_url}&fg_color=%23000000&height=256&width=256'
 
     qr_name = f"qr_{filename}"
     qr_path = request_and_save(qr_req_url, qr_name)
 
     r2 = s3_client.upload_file(qr_path, bucket_name, qr_name, ExtraArgs={'ACL': 'public-read'})
 
-    qr_url = get_s3_url(bucket_name = bucket_name, filename = qr_name)
+    
 
     # GENERATE REQUEST FOR WATERMARKER
-    watermark_req_url = f'https://watermarker.expeditedaddons.com/?api_key=' + '&height=100&image_url={image_url}&opacity=50&position=center&watermark_url={qr_url}&width=100'
+    watermark_req_url = f'https://watermarker.expeditedaddons.com/?api_key=IS431O1AX38GYW8DH07C2U6K6045NMF9R5PE7QTLZVBJ29&height=100&image_url={image_url}&opacity=50&position=center&watermark_url={qr_url}&width=100'
 
     watermark_name = f"watermark_{filename}"
     request_and_save(watermark_req_url, watermark_name)
