@@ -70,7 +70,7 @@ def apply_watermark():
 # api key P23OWF071I39S6QUR2EL9MDT74B165JX48CKYZ8N0A5VHG
 
     image_url = get_s3_url(bucket_name=bucket_name, filename=filename)
-    qr_url = get_s3_url(bucket_name = bucket_name, filename = qr_name)
+    qr_url = get_s3_url(bucket_name, qr_name)
 
     # GENERATE REQUEST FOR QRACKAJACK
     qr_req_url = f'https://qrackajack.expeditedaddons.com/?api_key=71T2JH3V6SAU450B710COPYI58WM39298FNDQ4G6RXKLEZ&bg_color=%23ffffff&content={image_url}&fg_color=%23000000&height=256&width=256'
